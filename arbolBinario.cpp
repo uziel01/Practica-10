@@ -1,43 +1,92 @@
-#include <iostream>
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
 using namespace std;
-struct NODO{
+
+struct Nodo{
 	int dato;
-	NODO* izq,*der;
+	Nodo *der;
+	Nodo *izq;
 };
-NODO* raiz=NULL;
+void menu();
+Nodo *crearNodo(int);
+void insertarNodo(Nodo *&, int);
+void mostrarArbol(Nodo *&, int);
 
-int main(int argc, char** argv) {
-	NODO *aux=raiz;
-	raiz=new NODO();
-	raiz->dato=7;
-	raiz->izq=new NODO();
-	raiz->der=new NODO();
-	aux=raiz->izq;
-	aux->dato=5;
-	aux->izq=new NODO();
-	aux->der=new NODO();
-	aux=aux->izq;
-	aux->dato=2;
-	aux->izq=NULL;
-	aux->der=NULL;
-	aux=raiz->izq;
-	aux=aux->der;
-	aux->dato=3;
-	aux->izq=NULL;
-	aux->der=NULL;
-	aux=raiz->der;
-	aux->dato=4;
-	aux->izq=NULL;
-	aux->der=new NODO();
-	aux=aux->der;
-	aux->dato=1;
-	aux->izq=NULL;
-	aux->der=NULL;
+Nodo *arbol=NULL;
 
-
-	cout<<raiz->dato<<endl;
-	cout<<raiz->izq->dato<<" "<<raiz->der->dato<<endl;
-	cout<<raiz->izq->izq->dato<<" "<<raiz->izq->der->dato<<" "<<raiz->der->der->dato<<endl;
-
+int main(){
+	menu();
+		
+	getch();
 	return 0;
+}
+
+void menu(){
+	int dato, opcion, contador=0;
+	
+	do{
+		cout<<"\t .:MENU de arbol:."<<endl;
+		cout<<"1.- Insertar un nuevo numero: "<<endl;
+		cout<<"2.- Mostrar arbol: "<<endl;
+		cout<<"3.- Salir"<<endl;
+		cout<<"Opcion: "<<endl;
+		cin>>opcion;
+		
+		switch(opcion){
+			case 1: cout<<"\n Digite un dato: ";
+					cin>>dato;
+					insertarNodo(arbol,dato);
+					cout<<"\n";
+					system("pause");	
+					break;
+			case 2: cout<<"\n Mostrar el arbol: \n\n";
+					mostrarArbol(arbol,contador);
+					cout<<"\n";
+					system("pause");
+					break;
+		}
+		system("cls");
+	}while(opcion !=3 );
+	
+}
+
+Nodo *crearNodo(int n){
+	Nodo *nuevoNodo=new Nodo();
+	
+	nuevoNodo->dato=n;
+	nuevoNodo->der=NULL;
+	nuevoNodo->izq=NULL;
+	
+	return nuevoNodo;
+}
+
+void insertarNodo(Nodo *&arbol, int n){
+	if(arbol==NULL){
+		Nodo *nuevoNodo=crearNodo(n);
+		arbol=nuevoNodo;
+	}
+	else{
+		int valorRaiz=arbol->dato;
+		if(n<valorRaiz){
+			insertarNodo(arbol->izq,n);	
+		}
+		else{
+			insertarNodo(arbol->der,n);
+		}
+	}
+}
+
+void mostrarArbol(Nodo *&arbol, int cont){
+	if(arbol==NULL){
+		return;
+	}
+	else{
+		mostrarArbol(arbol->der,cont+1);
+		for(int i=0; i<cont;i++){
+			cout<<"   ";	
+		}
+		cout<<arbol->dato<<endl;
+		mostrarArbol(arbol->izq,cont+1);
+	}
 }
