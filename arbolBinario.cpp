@@ -12,7 +12,7 @@ void menu();
 Nodo *crearNodo(int);
 void insertarNodo(Nodo *&, int);
 void mostrarArbol(Nodo *&, int);
-void preOrden(Nodo *);
+void inOrden(Nodo *);
 
 Nodo *arbol=NULL;
 
@@ -30,7 +30,7 @@ void menu(){
 		cout<<"\t .:MENU de arbol:."<<endl;
 		cout<<"1.- Insertar un nuevo numero: "<<endl;
 		cout<<"2.- Mostrar arbol: "<<endl;
-		cout<<"3.- Recorrer el arbol en preorden "<<endl;
+		cout<<"3.- Recorrer el arbol en orden "<<endl;
 		cout<<"4.- Salir"<<endl;
 		cout<<"Opcion: "<<endl;
 		cin>>opcion;
@@ -42,13 +42,13 @@ void menu(){
 					cout<<"\n";
 					system("pause");	
 					break;
-			case 2: cout<<"\n Mostrando el arbol: \n";
+			case 2: cout<<"\n Mostrando el arbol: \n\n";
 					mostrarArbol(arbol,contador);
 					cout<<"\n";
 					system("pause");
 					break;
-			case 3: cout<<"\n REcorrido en preOrden : ";
-					preOrden(arbol);
+			case 3: cout<<"\n REcorrido en Orden : ";
+					inOrden(arbol);
 					cout<<"\n\n";
 					system("pause");	
 					break;
@@ -98,13 +98,12 @@ void mostrarArbol(Nodo *&arbol, int cont){
 	}
 }	
 
-
-void preOrden(Nodo *arbol){
+void inOrden(Nodo *arbol){
 	if(arbol==NULL){
 		return;
 	}else{
+		inOrden(arbol->izq);
 		cout<<arbol->dato<<" - ";
-		preOrden(arbol->izq);
-		preOrden(arbol->der);
+		inOrden(arbol->der);
 	}
 }
